@@ -1,9 +1,11 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
 
 // Função de busca linear
-int buscaLinear(const std::vector<int>& array, int elemento) {
+int buscaLinear(const std::vector<int>& array, int elemento, int& passos) {
     for (int i = 0; i < array.size(); ++i) {
+        passos++; // Incrementa os passos a cada iteração
         if (array[i] == elemento) {
             return i;
         }
@@ -40,22 +42,36 @@ int main() {
     std::cin >> paginaDesejada;
 
     // Busca linear
-    int indiceLinear = buscaLinear(paginas, paginaDesejada);
+    int passosLinear = 0; // Inicializa o contador de passos para busca linear
+    auto inicioLinear = std::chrono::high_resolution_clock::now(); // Inicia a contagem do tempo
+    int indiceLinear = buscaLinear(paginas, paginaDesejada, passosLinear); // Passa o contador por referência
+    auto fimLinear = std::chrono::high_resolution_clock::now(); // Termina a contagem do tempo
+    std::chrono::duration<double, std::milli> duracaoLinear = fimLinear - inicioLinear;
+
     if (indiceLinear != -1) {
         std::cout << "Busca Linear: A página " << paginaDesejada << " foi encontrada no índice " << indiceLinear << ".\n";
+        std::cout << "Foram necessários " << passosLinear << " passos para encontrar a página.\n";
     } else {
         std::cout << "Busca Linear: A página " << paginaDesejada << " não foi encontrada.\n";
+        std::cout << "Foram necessários " << passosLinear << " passos.\n";
     }
+    std::cout << "Tempo de execução da busca linear: " << duracaoLinear.count() << " ms\n";
 
     // Busca binária
     int passosBinaria = 0;
+    auto inicioBinaria = std::chrono::high_resolution_clock::now();
     int indiceBinaria = buscaBinariaRecursiva(paginas, paginaDesejada, 0, paginas.size() - 1, passosBinaria);
+    auto fimBinaria = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> duracaoBinaria = fimBinaria - inicioBinaria;
+
     if (indiceBinaria != -1) {
         std::cout << "Busca Binária: A página " << paginaDesejada << " foi encontrada no índice " << indiceBinaria << ".\n";
         std::cout << "Foram necessários " << passosBinaria << " passos para encontrar a página.\n";
     } else {
         std::cout << "Busca Binária: A página " << paginaDesejada << " não foi encontrada.\n";
+        std::cout << "Foram necessários " << passosBinaria << " passos.\n";
     }
+    std::cout << "Tempo de execução da busca binária: " << duracaoBinaria.count() << " ms\n";
 
     return 0;
 }
