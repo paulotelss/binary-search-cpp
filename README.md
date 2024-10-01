@@ -11,3 +11,5 @@ Como já expliquei anteriormente em outros repositórios, agora estou disponibil
 - A busca binária é um algoritmo eficiente para listas ordenadas, dividindo repetidamente a lista ao meio até encontrar o elemento desejado.
 
 O código completo está disponível na pasta `binary.cpp`.
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=65&section=footer"/>
